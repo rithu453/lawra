@@ -1,0 +1,169 @@
+/* .lawcards-container {
+    margin-top: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.lawcards {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    width: 100%;
+}
+
+.lawcards:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lawcards-details {
+    margin-bottom: 20px;
+}
+
+.text-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.text-body {
+    color: #555;
+    font-size: 1em;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.lawcards-button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    display: inline-block;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%;
+}
+
+.lawcards-button:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+}
+/* src/components/CardF.css */
+
+
+/* Law Cards Container */
+.lawcards-container {
+    margin-top: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Law Cards */
+.lawcards {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    max-width: 320px;
+    padding: 24px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.lawcards:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Law Card Details */
+.lawcards-details {
+    margin-bottom: 20px;
+}
+
+/* Text Title */
+.text-title {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+/* Text Body */
+.text-body {
+    color: #555;
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Law Card Button */
+.lawcards-button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 12px 0;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    cursor: pointer;
+}
+
+.lawcards-button:hover {
+    background: linear-gradient(135deg, #0056b3, #004494);
+    transform: scale(1.02);
+}
+
+/* Chatbot Toggle Button */
+.chatbot-toggle-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.chatbot-toggle-button:hover {
+    background: linear-gradient(135deg, #0056b3, #004494);
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .lawcards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .lawcards {
+        max-width: 90%;
+    }
+}
