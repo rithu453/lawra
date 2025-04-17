@@ -33,6 +33,7 @@ const Footer = () => {
                     <h3 className="footer-title" >Contact us</h3>
                     <p>phone : 8143962706</p>
                     <p>Email : rithwik.marpally22@kmit.edu.in</p>
+                    <p>Email : rithwik@charakan.info</p>
                 </div>
             </div>
             <div className="footer-bottom">
