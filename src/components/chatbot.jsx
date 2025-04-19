@@ -1,52 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './chatbot1.css';
 import axios from 'axios';
 
 const Chatbot = () => {
-  const [sessions, setSessions] = useState([]);
-  const [currentSessionId, setCurrentSessionId] = useState('');
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef(null);
 
+  // Auto-scroll to bottom when new messages arrive
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Load messages from localStorage on initial render
   useEffect(() => {
-    const savedSessions = JSON.parse(localStorage.getItem('chatbot-sessions')) || [];
-    setSessions(savedSessions);
-    if (savedSessions.length > 0) {
-      loadSession(savedSessions[0].sessionId);
+    const savedMessages = JSON.parse(localStorage.getItem('lawra-chat-history')) || [];
+    
+    if (savedMessages.length > 0) {
+      // Convert timestamp strings back to Date objects
+      const processedMessages = savedMessages.map(msg => ({
+        ...msg,
+        timestamp: new Date(msg.timestamp)
+      }));
+      setMessages(processedMessages);
     } else {
-      startNewSession();
+      // Set welcome message if no history exists
+      const welcomeMessage = {
+        text: "Hello! I am LAWRA, your legal assistant for Indian law information. How can I help you today?",
+        user: 'bot',
+        timestamp: new Date()
+      };
+      setMessages([welcomeMessage]);
+      localStorage.setItem('lawra-chat-history', JSON.stringify([welcomeMessage]));
     }
   }, []);
 
-  const startNewSession = async () => {
-    try {
-      console.log('Starting new session...');
-      const response = await axios.post('http://localhost:3005/api/sessions', { sessionId: `session-${Date.now()}` });
-      const newSession = response.data;
-      console.log('New session created:', newSession);
-      const updatedSessions = [newSession, ...sessions];
-      setSessions(updatedSessions);
-      setCurrentSessionId(newSession.sessionId);
-      setMessages([]);
-      localStorage.setItem('chatbot-sessions', JSON.stringify(updatedSessions));
-    } catch (error) {
-      console.error('Error creating a new session:', error);
-    }
-  };
+  // Scroll to bottom whenever messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-  const loadSession = async (sessionId) => {
-    try {
-      console.log(`Loading session ${sessionId}...`);
-      const response = await axios.get(`http://localhost:3005/api/sessions/${sessionId}`);
-      const session = response.data;
-      console.log('Loaded session:', session);
-      setCurrentSessionId(sessionId);
-      setMessages(session.messages);
-    } catch (error) {
-      console.error('Error loading the session:', error);
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem('lawra-chat-history', JSON.stringify(messages));
     }
-  };
+  }, [messages]);
 
   const handleSend = async () => {
     if (input.trim()) {
@@ -57,76 +57,77 @@ const Chatbot = () => {
       setLoading(true);
 
       try {
-        console.log('Sending message to backend...');///add here
-        const result = await axios.post('https://9ec3-35-230-102-62.ngrok-free.app/query', { query: input, sessionId: currentSessionId });
+        console.log('Sending message to backend...');
+        const result = await axios.post(
+          'http://127.0.0.1:8000/query',  // Use your backend URL
+          { query: input },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
+        // Add short delay for UX
         setTimeout(() => {
-          const botMessage = { text: result.data.answer, user: 'bot', timestamp: new Date() };
+          const botMessage = {
+            text: result.data.response,  // Make sure this matches your backend response
+            user: 'bot',
+            timestamp: new Date(),
+          };
           const updatedMessagesWithBot = [...updatedMessages, botMessage];
           setMessages(updatedMessagesWithBot);
-          updateSessionMessages(currentSessionId, updatedMessagesWithBot);
           setLoading(false);
-        }, 2000);
+        }, 1000);
       } catch (error) {
         console.error('Error querying the backend:', error);
-        const errorMessage = { text: 'Error querying the backend. Please check the console for more details.', user: 'bot', timestamp: new Date() };
+        const errorMessage = {
+          text: 'Sorry, I encountered an error. Please try again later.',
+          user: 'bot',
+          timestamp: new Date(),
+        };
         const updatedMessagesWithError = [...updatedMessages, errorMessage];
         setMessages(updatedMessagesWithError);
-        updateSessionMessages(currentSessionId, updatedMessagesWithError);
         setLoading(false);
       }
     }
   };
 
-  const updateSessionMessages = async (sessionId, updatedMessages) => {
-    const updatedSessions = sessions.map(session =>
-      session.sessionId === sessionId ? { ...session, messages: updatedMessages } : session
-    );
-    setSessions(updatedSessions);
-    localStorage.setItem('chatbot-sessions', JSON.stringify(updatedSessions));
-
-    try {
-      console.log(`Updating session ${sessionId}...`);
-      await axios.put(`http://localhost:3005/api/sessions/${sessionId}`, { messages: updatedMessages });
-    } catch (error) {
-      console.error('Error updating the session:', error);
-    }
+  // Clear chat history
+  const clearHistory = () => {
+    const welcomeMessage = {
+      text: "Chat history cleared. How can I help you today?",
+      user: 'bot',
+      timestamp: new Date()
+    };
+    setMessages([welcomeMessage]);
+    localStorage.setItem('lawra-chat-history', JSON.stringify([welcomeMessage]));
   };
 
   return (
     <div className="chatbot">
       <div className="chatbot-container">
-        <aside className="chatbot-sidebar">
-          <button className="new-session-button" onClick={startNewSession}>New Session</button>
-          <ul className="session-list">
-            {sessions.map((session, index) => (
-              <li
-                key={index}
-                className={`session-item ${session.sessionId === currentSessionId ? 'active' : ''}`}
-                onClick={() => loadSession(session.sessionId)}
-              >
-                {session.sessionId}
-              </li>
-            ))}
-          </ul>
-        </aside>
-        <main className="chatbot-main">
+        <main className="chatbot-main" style={{ width: '100%' }}>
           <header className="chatbot-header">
-            <h2>LAWRA</h2>
+            <h2>LAWRA - Indian Legal Assistant</h2>
+            <button className="clear-history-btn" onClick={clearHistory}>Clear History</button>
           </header>
           <div className="chat-window">
             <div className="chat-messages">
               {messages.map((message, index) => (
                 <div key={index} className={`chat-message ${message.user}`}>
-                  <span className="message-text">{message.text}</span>
+                  <div className="message-text">{message.text}</div>
                   <span className="message-timestamp">{new Date(message.timestamp).toLocaleTimeString()}</span>
                 </div>
               ))}
               {loading && (
-                <div className="chat-message bot">
-                  <span className="message-text">Bot is typing...</span>
+                <div className="chat-message bot loading">
+                  <div className="message-text">
+                    <span className="typing-indicator">Thinking</span>
+                  </div>
                 </div>
               )}
+              <div ref={messagesEndRef} />
             </div>
             <div className="chat-input">
               <input
@@ -138,7 +139,7 @@ const Chatbot = () => {
                     handleSend();
                   }
                 }}
-                placeholder="Type a message..."
+                placeholder="Ask about Indian law..."
                 disabled={loading}
               />
               <button onClick={handleSend} disabled={loading}>Send</button>
