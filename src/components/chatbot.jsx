@@ -59,7 +59,7 @@ const Chatbot = () => {
       try {
         console.log('Sending message to backend...');
         const result = await axios.post(
-          'http://127.0.0.1:8000/query',  // Use your backend URL
+          'https://lawback-1.onrender.com/query',  // Use your backend URL
           { query: input },
           {
             headers: {
