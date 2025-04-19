@@ -1,132 +1,24 @@
-
-/* Adjust the chatbot container layout */
-.chatbot-container {
-  display: flex;
-  height: 88vh; /* Make the entire container take the full viewport height */
-}
-
-/* Sidebar styling */
-.chatbot-sidebar {
-  width: 25%; /* Adjust width to give more space to the message box */
-  background-color: #f4f4f4;
-  padding: 1rem;
-}
-
-.new-session-button {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.session-list {
-  list-style: none;
-  padding: 0;
-  overflow-y: auto;
-  max-height: calc(100vh - 150px); /* Ensure the session list doesn't overflow */
-}
-
-.session-item {
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  background-color: #e0e0e0;
-  cursor: pointer;
-}
-
-.session-item.active {
-  background-color: #b3d1ff;
-}
-
-/* Main chat window styling */
-.chatbot-main {
-  width: 75%; /* Increased width for chat area */
-  display: flex;
-  flex-direction: column;
-}
-
+/* Add this to your existing CSS */
 .chatbot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 1rem;
   background-color: #3b9a47;
   color: white;
-  text-align: center;
 }
 
-/* Chat window styling */
-.chat-window {
-  flex: 1; /* Take up the remaining space of the container */
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  padding: 1rem;
-  overflow-y: auto; /* Scroll messages when they exceed the height */
-}
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto; /* Scroll for the messages area */
-}
-
-.chat-message {
-  margin-bottom: 1rem;
-}
-
-.chat-message.user .message-text {
-  background-color: #d0eaff;
-  padding: 0.5rem;
-  border-radius: 5px;
-  display: inline-block;
-}
-
-.chat-message.bot .message-text {
-  background-color: #e0e0e0;
-  padding: 0.5rem;
-  border-radius: 5px;
-  display: inline-block;
-}
-
-.message-timestamp {
-  display: block;
-  font-size: 0.75rem;
-  color: #666;
-  margin-top: 0.25rem;
-}
-
-/* Input area styling */
-.chat-input {
-  display: flex;
-  padding: 1rem;
-  background-color: #f4f4f4;
-  /* Increase the height of the input area */
-  min-height: 70px; 
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-right: 1rem;
-  font-size: 1rem;
-  /* Increase the height of the input box */
-  height: 100%; 
-  width: 60vw;
-}
-
-.chat-input button {
-  padding: 1rem;
-  background-color: #3b9a47;
+.clear-history-btn {
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
   border: none;
-  border-radius: 5px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
   cursor: pointer;
-  /* Match the button size with the input box */
-  height: 100%; 
+  font-size: 0.8rem;
+  transition: background-color 0.2s;
 }
 
-.chat-input button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.clear-history-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
-
-
-
-
