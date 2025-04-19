@@ -17,7 +17,7 @@ import NavBar from './components/NavBar';
 import RegistrationPage from './components/register';
 import Footer from './components/Footer';
 import Chatbot from './components/chatbot';
-import ChatInterface from './components/assist';
+import Complete from './components/assist';
 import EmploymentContracts from './components/contract';
 import  CourtCases from './components/famouscases';
 import News from './components/news';
@@ -43,7 +43,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegistrationPage />} /> 
         <Route path="/chatbot" element={<Chatbot/>}/>
-        <Route path="/assist" element={<ChatInterface/>}/>
+        <Route path="/assist" element={<Complete/>}/>
         <Route path="/contract" element={<EmploymentContracts/>}/>
         <Route path="/famous" element={<CourtCases/>}/>
         <Route path="/news" element={<News/>}/>
