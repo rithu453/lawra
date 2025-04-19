@@ -214,7 +214,7 @@ const CourtCases = () => {
 };
 
 // Main App Component
-const App = () => {
+const Complete = () => {
   return (
     <Container maxWidth="lg" sx={{ display: "flex", height: "100vh", py: 4 }}>
       <ChatInterface />
@@ -223,4 +223,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Complete;
