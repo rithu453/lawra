@@ -113,7 +113,7 @@ const ChatInterface = () => {
     setError(null);
 
     try {
-      const response = await axios.post("https://9ec3-35-230-102-62.ngrok-free.app/query", {
+      const response = await axios.post("https://lawback-1.onrender.com/query", {
         query: question,
       });
 
