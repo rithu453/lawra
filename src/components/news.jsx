@@ -9,7 +9,7 @@ const LegalNews = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/news');
+        const response = await fetch('https://lawback-1.onrender.com/news');
 
         if (!response.ok) {
           const message = `Server responded with status ${response.status}`;
