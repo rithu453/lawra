@@ -49,7 +49,7 @@ const ChatInterface = () => {
 
     try {
       const result = await axios.post(
-        'http://127.0.0.1:8000/query',
+        'https://lawback-1.onrender.com/query',
         { query: question },
         { headers: { 'Content-Type': 'application/json' } }
       );
