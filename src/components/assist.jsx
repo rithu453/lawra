@@ -1,20 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  Container,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  Button,
-  CircularProgress,
-  Box,
-  Paper,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Container, Grid, Card, CardContent, Typography, TextField, Button, CircularProgress, Box } from "@mui/material";
 import axios from "axios";
-import "./assist.css"; // Optional for any additional styles
+import "./assist.css"; // Import CSS for chat styling
 
-// Court Cases Data
+// **Court Cases Data**
 const cases = [
   "Kesavananda Bharati v. State of Kerala",
   "Maneka Gandhi v. Union of India",
@@ -43,113 +32,106 @@ const cases = [
   "Vineet Narain v. Union of India",
 ].sort();
 
-// Chat Interface Component
+// **Chat Interface Component**
 const ChatInterface = () => {
-  const [messages, setMessages] = useState([]);
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
   const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("lawra-chat-history")) || [];
-
-    if (saved.length > 0) {
-      const processed = saved.map((msg) => ({
-        ...msg,
-        timestamp: new Date(msg.timestamp),
-      }));
-      setMessages(processed);
-    } else {
-      const welcome = {
-        text: "Hello! I am LAWRA, your legal assistant for Indian law information. How can I help you today?",
-        user: "bot",
-        timestamp: new Date(),
-      };
-      setMessages([welcome]);
-      localStorage.setItem("lawra-chat-history", JSON.stringify([welcome]));
-    }
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
-    if (messages.length > 0) {
-      localStorage.setItem("lawra-chat-history", JSON.stringify(messages));
-    }
-  }, [messages]);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!question.trim()) return;
 
-    const newUserMessage = {
-      text: question,
-      user: "user",
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, newUserMessage]);
+    setAnswer('');
+    setError(null);
     setLoading(true);
 
     try {
-      const response = await axios.post("https://lawback-1.onrender.com/query", {
-        query: question,
-      });
-
-      const botText = response.data.answer.split(". ").join(".\n");
-      const botMessage = {
-        text: botText,
-        user: "bot",
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, botMessage]);
+      const result = await axios.post(
+        'http://127.0.0.1:8000/query',
+        { query: question },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+      
+      console.log("Response from backend:", result.data);
+      
+      // Check response structure and extract answer
+      if (result.data) {
+        // If result.data itself is the answer (string)
+        if (typeof result.data === 'string') {
+          setAnswer(result.data);
+        } 
+        // If result.data.answer exists
+        else if (result.data.answer) {
+          setAnswer(result.data.answer);
+        }
+        // If result.data.response exists (common alternative name)
+        else if (result.data.response) {
+          setAnswer(result.data.response);
+        }
+        // If result.data has some other structure, convert to string
+        else {
+          setAnswer(JSON.stringify(result.data, null, 2));
+        }
+      } else {
+        setError("Received an empty response from the server");
+      }
     } catch (err) {
-      const errorMessage = {
-        text: "Error fetching response from backend.",
-        user: "bot",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-      console.error("Error:", err);
+      console.error("Error:", err.response || err);
+      setError("Error fetching response from backend.");
+    } finally {
+      setLoading(false);
     }
-
-    setQuestion("");
-    setLoading(false);
   };
 
   return (
     <Box sx={{ flex: 1, p: 3 }}>
       <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", color: "#333" }}>
-        Legal Assistant Chat
+        Legal Assistant Q&A
       </Typography>
 
-      <Paper variant="outlined" sx={{ p: 2, mb: 2, maxHeight: "60vh", overflowY: "auto", backgroundColor: "#fafafa" }}>
-        {messages.map((msg, idx) => (
-          <Box key={idx} sx={{ mb: 1, textAlign: msg.user === "user" ? "right" : "left" }}>
-            <Typography
-              variant="body2"
-              sx={{
-                backgroundColor: msg.user === "user" ? "#e3f2fd" : "#f1f8e9",
-                display: "inline-block",
-                px: 2,
-                py: 1,
-                borderRadius: 2,
-                whiteSpace: "pre-wrap",
-                maxWidth: "80%",
+      <Box
+        sx={{
+          minHeight: '200px',
+          mb: 2,
+          p: 2,
+          bgcolor: '#f5f5f5',
+          borderRadius: 1,
+          boxShadow: 1,
+          overflowY: 'auto'
+        }}
+      >
+        {question && (
+          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'bold' }}>
+            Q: {question}
+          </Typography>
+        )}
+        {loading ? (
+          <Box display="flex" justifyContent="center" my={2}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          answer && (
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                whiteSpace: 'pre-wrap',
+                maxHeight: '300px', // Set a maximum height
+                overflowY: 'auto',  // Add vertical scrollbar when needed
+                padding: '10px',    // Add some padding
+                border: '1px solid #e0e0e0', // Optional: adds a subtle border
+                borderRadius: '4px', // Optional: rounds corners
+                backgroundColor: '#ffffff', // Optional: white background for contrast
               }}
             >
-              {msg.text}
+              A: {answer}
             </Typography>
-          </Box>
-        ))}
-        <div ref={messagesEndRef} />
-      </Paper>
+          )
+        )}
+      </Box>
 
-      <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
+      <form onSubmit={handleSubmit}>
         <TextField
           label="Ask your legal question..."
           variant="outlined"
@@ -159,21 +141,30 @@ const ChatInterface = () => {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           required
+          disabled={loading}
           sx={{ mb: 2 }}
         />
-        <Button type="submit" variant="contained" color="primary" disabled={loading}>
+        <Button 
+          type="submit" 
+          variant="contained" 
+          color="primary" 
+          disabled={loading || !question.trim()}
+        >
           {loading ? <CircularProgress size={24} /> : "Submit"}
         </Button>
       </form>
 
-      <Typography variant="body2" sx={{ mt: 2, color: "#777" }}>
-        Tip: Copy and paste any case name and search like: <em>ADM Jabalpur v. Shivkant Shukla case materials</em>
-      </Typography>
+      {error && (
+        <Typography color="error" sx={{ mt: 2 }}>
+          {error}
+        </Typography>
+      )}
     </Box>
   );
 };
 
-// Court Cases Component
+
+// **Court Cases Component**
 const CourtCases = () => {
   return (
     <Box
@@ -213,8 +204,8 @@ const CourtCases = () => {
   );
 };
 
-// Main App Component
-const Complete = () => {
+// **Main App Component**
+const Bot = () => {
   return (
     <Container maxWidth="lg" sx={{ display: "flex", height: "100vh", py: 4 }}>
       <ChatInterface />
@@ -223,4 +214,5 @@ const Complete = () => {
   );
 };
 
-export default Complete;
+export default Bot;
+
