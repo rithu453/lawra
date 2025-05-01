@@ -11,6 +11,7 @@ const Footer = () => {
                         We provide legal assistance for various fields including family law, employment law, property law, labor law, traffic law, and voting rights.
                     </p>
                 </div>
+
                 <div className="footer-section links">
                     <h2 className="footer-title">Quick Links</h2>
                     <ul className="footer-list">
@@ -20,22 +21,36 @@ const Footer = () => {
                         <li><a href="/contact">Contact Us</a></li>
                     </ul>
                 </div>
+
                 <div className="footer-section social">
                     <h2 className="footer-title">Follow Us</h2>
                     <div className="footer-social-icons">
-                        <a href="#" className="social-icon"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" className="social-icon"><i className="fab fa-twitter"></i></a>
-                        <a href="#" className="social-icon"><i className="fab fa-instagram"></i></a>
-                        <a href="#" className="social-icon"><i className="fab fa-linkedin-in"></i></a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                            <i className="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                            <i className="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                            <i className="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                            <i className="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://yourblog.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                            <i className="fas fa-blog"></i>
+                        </a>
                     </div>
                 </div>
+
                 <div className="footer-section contact">
-                    <h3 className="footer-title" >Contact us</h3>
-                    <p>phone : 8143962706</p>
-                    <p>Email : rithwik.marpally22@kmit.edu.in</p>
-                    <p>Email : rithwik@charakan.info</p>
+                    <h3 className="footer-title">Contact Us</h3>
+                    <p>Phone: 8143962706</p>
+                    <p>Email: rithwik.marpally22@kmit.edu.in</p>
+                    <p>Email: rithwik@charakan.info</p>
                 </div>
             </div>
+
             <div className="footer-bottom">
                 <p>&copy; 2024 Legal Assistance. All rights reserved.</p>
             </div>
