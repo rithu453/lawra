@@ -1,76 +1,103 @@
 .footer {
-    background-color: #333;
-    color: #fff;
-    padding: 40px 0;
-    text-align: left;
+  background-color: #333;
+  color: #fff;
+  padding: 40px 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .footer-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .footer-section {
-    flex: 1;
-    margin: 20px;
-    min-width: 200px;
+  flex: 1;
+  margin: 20px;
+  min-width: 240px;
 }
 
 .footer-title {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #007bff;
-    display: inline-block;
-    padding-bottom: 5px;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #007bff;
+  display: inline-block;
+  padding-bottom: 5px;
 }
 
 .footer-text {
-    font-size: 1em;
-    line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
 }
 
 .footer-list {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer-list li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .footer-list li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.2s;
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .footer-list li a:hover {
-    color: #007bff;
+  color: #007bff;
 }
 
 .footer-social-icons {
-    display: flex;
-    margin-top: 10px;
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .social-icon {
-    color: #fff;
-    font-size: 1.2em;
-    margin-right: 10px;
-    text-decoration: none;
-    transition: color 0.2s;
+  color: #fff;
+  font-size: 1.4rem;
+  transition: color 0.3s ease;
 }
 
 .social-icon:hover {
-    color: #007bff;
+  color: #007bff;
 }
 
 .footer-bottom {
-    background-color: #222;
-    padding: 20px 0;
+  background-color: #222;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #bbb;
+  border-top: 1px solid #444;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+  }
+
+  .footer-section {
+    margin: 20px 0;
+    min-width: 100%;
+  }
+
+  .footer-social-icons {
+    justify-content: center;
+  }
+
+  .footer-title {
+    font-size: 1.3rem;
+  }
 }
