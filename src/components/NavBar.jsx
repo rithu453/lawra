@@ -1,38 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './NavBar.css'; // Assuming you have defined styles in NavBar.css
+import './NavBar.css';
 
 const NavBar = () => {
+    const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
     const handleBackClick = () => {
         const userConfirmed = window.confirm("Do you want to go back to login page?");
         if (userConfirmed) {
-            window.location.href = "http://localhost:3001/login"; // Replace with your desired URL
+            window.location.href = "https://charakan.info/";
         }
+    };
+
+    const handleNavToggle = () => {
+        setIsNavCollapsed(!isNavCollapsed);
+    };
+
+    const handleDropdownToggle = () => {
+        setIsDropdownOpen(!isDropdownOpen);
     };
 
     return (
         <div className='top'>
             <nav className="navbar navbar-expand-lg navbar-dark bg-black">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="#" onClick={handleBackClick}>LAWRA</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <Link className="navbar-brand" to="#" onClick={handleBackClick}>
+                        LAWRA
+                    </Link>
+
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        aria-controls="navbarNavDropdown"
+                        aria-expanded={!isNavCollapsed}
+                        aria-label="Toggle navigation"
+                        onClick={handleNavToggle}
+                    >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+
+                    <div
+                        className={`navbar-collapse ${isNavCollapsed ? 'collapse': 'show'}`}
+                        id="navbarNavDropdown"
+                    >
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to="/home">Home</Link>
+                                <Link className="nav-link active" to="/home">Home</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/AboutUs">About Us</Link>
                             </li>
-                            <li className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <li
+                                className={`nav-item dropdown ${isDropdownOpen ? 'show' : ''}`}
+                                onClick={handleDropdownToggle}
+                            >
+                                <span className="nav-link dropdown-toggle" role="button">
                                     Students
-                                </Link>
-                                <ul className="dropdown-menu">
+                                </span>
+                                <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
                                     <li><Link className="dropdown-item" to="/assist">Research assistant</Link></li>
-                                    <li><Link className="dropdown-item" to="/news">news</Link></li>
+                                    <li><Link className="dropdown-item" to="/news">News</Link></li>
                                 </ul>
                             </li>
                             <li className="nav-item">
@@ -44,6 +72,6 @@ const NavBar = () => {
             </nav>
         </div>
     );
-}
+};
 
 export default NavBar;
