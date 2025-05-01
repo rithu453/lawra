@@ -1,46 +1,43 @@
-/* Basic navbar styles */
+/* Default styles (Desktop) */
 .navbar {
-  background-color: #0c7ef0; /* Background color */
-  height: 65px; /* Adjust height of the navbar */
+  background-color: #0c7ef0;
+  height: 65px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  /* margin-bottom: 5rem; */
-  /* Remove fixed positioning */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.top{
+
+.top {
   margin-bottom: 5%;
-
 }
 
-/* Adjustments for navbar brand */
 .navbar-brand {
   color: #fff;
   cursor: pointer;
   text-decoration: none;
   font-size: 1.5rem;
-  transition: color 0.3s ease; /* Smooth transition effect */
+  transition: color 0.3s ease;
 }
 
 .navbar-brand:hover {
-  color: #f0f0f0; /* Slightly lighter color on hover */
+  color: #f0f0f0;
 }
 
-/* Navbar toggler styles */
 .navbar-toggler {
   border: none;
   background: transparent;
-  color: #fff; /* Color for the toggler icon */
+  color: #fff;
+  font-size: 1.5rem;
+  display: none; /* Hidden on desktop */
 }
 
-/* Align navigation links to the right */
 .navbar-collapse {
   display: flex;
-  flex-grow: 1; /* Allows items to take up remaining space */
-  justify-content: flex-end; /* Align nav items to the right */
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 .navbar-nav {
@@ -51,7 +48,7 @@
 }
 
 .nav-item {
-  margin-left: 1rem; /* Space between items */
+  margin-left: 1rem;
 }
 
 .nav-link {
@@ -60,17 +57,16 @@
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
-  transition: color 0.3s ease, border-bottom 0.3s ease; /* Smooth transitions */
+  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #f0f0f0; /* Lighter color on hover */
-  border-bottom: 3px solid #fff; /* Highlighted underline */
+  color: #f0f0f0;
+  border-bottom: 3px solid #fff;
 }
 
-/* Dropdown menu styles */
 .dropdown-menu {
-  display: none; /* Initially hidden */
+  display: none;
   position: absolute;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -92,7 +88,7 @@
   color: #333;
   text-decoration: none;
   font-size: 14px;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dropdown-item:hover {
@@ -101,38 +97,84 @@
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
-  display: block; /* Show the dropdown menu when hovering over the parent */
+  display: block;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 960px) {
+/* Responsive for tablets and smaller laptops */
+@media screen and (max-width: 992px) {
   .navbar {
-    height: auto;
     flex-direction: column;
+    align-items: flex-start;
+    height: auto;
     padding: 1rem;
   }
 
+  .navbar-toggler {
+    display: block;
+    align-self: flex-end;
+  }
+
   .navbar-collapse {
+    flex-direction: column;
+    width: 100%;
+    display: none; /* Hidden until toggled */
+  }
+
+  .navbar-collapse.show {
     display: flex;
+  }
+
+  .navbar-nav {
     flex-direction: column;
     width: 100%;
   }
 
   .nav-item {
-    margin: 0.5rem 0; /* Space between items in mobile view */
+    width: 100%;
+    margin: 0.3rem 0;
   }
 
   .nav-link {
-    text-align: center;
-    padding: 1rem;
     width: 100%;
+    padding: 1rem;
+    text-align: left;
   }
 
   .nav-link:hover {
-    border: none;
+    border-bottom: none;
+    background-color: #005bb5;
   }
 
-  .navbar-toggler {
-    display: block;
+  .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+  }
+
+  .dropdown-item {
+    color: white;
+    background-color: #0c7ef0;
+  }
+
+  .dropdown-item:hover {
+    background-color: #005bb5;
+  }
+}
+
+/* Mobile specific tweaks */
+@media screen and (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  .dropdown-item {
+    font-size: 13px;
+    padding: 6px 12px;
   }
 }
