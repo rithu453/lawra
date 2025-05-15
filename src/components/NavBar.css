@@ -16,6 +16,7 @@
   width: 100%;
 }
 
+/* Top content adjustment for fixed navbar */
 .top {
   margin-bottom: calc(5% + 65px); /* Adjust margin to account for fixed navbar height */
   padding-top: 65px; /* Add padding to prevent content from hiding behind navbar */
