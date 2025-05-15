@@ -1,43 +1,70 @@
-/* Default styles (Desktop) */
+/* Basic navbar styles */
 .navbar {
-  background-color: #0c7ef0;
-  height: 65px;
+  background-color: #0c7ef0; /* Background color */
+  height: 65px; /* Adjust height of the navbar */
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  position: fixed; /* Make navbar fixed at the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure navbar stays on top of other content */
+  width: 100%;
 }
 
 .top {
-  margin-bottom: 5%;
+  margin-bottom: calc(5% + 65px); /* Adjust margin to account for fixed navbar height */
+  padding-top: 65px; /* Add padding to prevent content from hiding behind navbar */
 }
 
+/* Adjustments for navbar brand */
 .navbar-brand {
   color: #fff;
   cursor: pointer;
   text-decoration: none;
   font-size: 1.5rem;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease; /* Smooth transition effect */
+  padding: 10px 0;
 }
 
 .navbar-brand:hover {
-  color: #f0f0f0;
+  color: #f0f0f0; /* Slightly lighter color on hover */
 }
 
+/* Navbar toggler styles */
 .navbar-toggler {
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   background: transparent;
   color: #fff;
-  font-size: 1.5rem;
-  display: none; /* Hidden on desktop */
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: none; /* Hide by default, show in mobile */
 }
 
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-size: 100%;
+}
+
+/* Align navigation links to the right */
 .navbar-collapse {
   display: flex;
-  flex-grow: 1;
-  justify-content: flex-end;
+  flex-grow: 1; /* Allows items to take up remaining space */
+  justify-content: flex-end; /* Align nav items to the right */
 }
 
 .navbar-nav {
@@ -45,10 +72,12 @@
   flex-direction: row;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .nav-item {
-  margin-left: 1rem;
+  margin-left: 1rem; /* Space between items */
+  position: relative;
 }
 
 .nav-link {
@@ -57,16 +86,18 @@
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
-  transition: color 0.3s ease, border-bottom 0.3s ease;
+  transition: color 0.3s ease, border-bottom 0.3s ease; /* Smooth transitions */
+  border-bottom: 3px solid transparent;
 }
 
-.nav-link:hover {
-  color: #f0f0f0;
-  border-bottom: 3px solid #fff;
+.nav-link:hover, .nav-link.active {
+  color: #f0f0f0; /* Lighter color on hover */
+  border-bottom: 3px solid #fff; /* Highlighted underline */
 }
 
+/* Dropdown menu styles */
 .dropdown-menu {
-  display: none;
+  display: none; /* Initially hidden */
   position: absolute;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -88,7 +119,7 @@
   color: #333;
   text-decoration: none;
   font-size: 14px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
 }
 
 .dropdown-item:hover {
@@ -97,84 +128,105 @@
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
-  display: block;
+  display: block; /* Show the dropdown menu when hovering over the parent */
 }
 
-/* Responsive for tablets and smaller laptops */
-@media screen and (max-width: 992px) {
+/* Responsive Design */
+@media screen and (max-width: 960px) {
   .navbar {
-    flex-direction: column;
-    align-items: flex-start;
     height: auto;
-    padding: 1rem;
+    min-height: 65px; /* Keep minimum height for collapsed state */
+    flex-wrap: wrap;
+    padding: 0 15px;
+  }
+  
+  .container-fluid {
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .navbar-toggler {
     display: block;
-    align-self: flex-end;
+    margin-left: auto;
   }
 
   .navbar-collapse {
-    flex-direction: column;
+    flex-basis: 100%;
+    flex-grow: 1;
     width: 100%;
-    display: none; /* Hidden until toggled */
+    display: none; /* Hide by default */
+    padding-bottom: 15px;
   }
-
+  
   .navbar-collapse.show {
-    display: flex;
+    display: block; /* Show when toggled */
   }
 
   .navbar-nav {
     flex-direction: column;
     width: 100%;
+    padding-top: 10px;
   }
 
   .nav-item {
+    margin: 0;
     width: 100%;
-    margin: 0.3rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .nav-link {
+    padding: 12px 15px;
     width: 100%;
-    padding: 1rem;
-    text-align: left;
+    justify-content: center;
+    border-bottom: none; /* Remove hover underline on mobile */
   }
 
-  .nav-link:hover {
+  .nav-link:hover, .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
     border-bottom: none;
-    background-color: #005bb5;
   }
-
+  
+  /* Additional mobile-specific styles */
   .dropdown-menu {
     position: static;
-    box-shadow: none;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
     border: none;
-    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
   }
-
+  
   .dropdown-item {
-    color: white;
-    background-color: #0c7ef0;
+    padding: 12px 25px;
+    color: #fff;
   }
-
+  
   .dropdown-item:hover {
-    background-color: #005bb5;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Display dropdown on click rather than hover for mobile */
+  .nav-item.dropdown:hover .dropdown-menu {
+    display: none;
+  }
+  
+  .nav-item.dropdown.show .dropdown-menu {
+    display: block;
   }
 }
 
-/* Mobile specific tweaks */
-@media screen and (max-width: 576px) {
-  .navbar-brand {
-    font-size: 1.2rem;
+/* Animation for mobile menu */
+@media screen and (max-width: 960px) {
+  .navbar-collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
   }
-
-  .nav-link {
-    font-size: 1rem;
-    padding: 0.8rem;
-  }
-
-  .dropdown-item {
-    font-size: 13px;
-    padding: 6px 12px;
+  
+  .navbar-collapse.show {
+    max-height: 500px; /* Adjust as needed */
   }
 }
