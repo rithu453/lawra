@@ -1,10 +1,7 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
-
-import Home from './components/pages/Home';
-import CardF from './components/CardF';
-import OurVision from './OurVision';
+import HeroSection from './components/HeroSection';
 import LoginPage from './components/loginpage/LoginPage';
 import FamilyCard from './components/FamilyCard';
 import EmploymentCard from './components/EmploymentCard';
@@ -19,8 +16,9 @@ import Footer from './components/Footer';
 import Chatbot from './components/chatbot';
 import Bot from './components/assist';
 import EmploymentContracts from './components/contract';
-import  CourtCases from './components/famouscases';
+import CourtCases from './components/famouscases';
 import News from './components/news';
+import Home from './Home';
 
 function App() {
   const location = useLocation();
@@ -30,9 +28,8 @@ function App() {
       {/* Conditionally render the NavBar based on the current route */}
       {location.pathname !== '/register' && location.pathname !=='/login' && location.pathname !=='/' && <NavBar /> }
       <Routes>
-        <Route path="/" element={<Home />} />   {/* HeroSection*/}
-        <Route path="/home" element={<CardF />} />
-        <Route path="/ourvision" element={<OurVision />} />
+        <Route path="/" element={<HeroSection/>} />   {/* HeroSection*/}
+        <Route path="/home" element={<Home />} />
         <Route path="/aboutus" element={<AboutUsPage />} />
         <Route path="/familycard" element={<FamilyCard />} />
         <Route path="/employmentcard" element={<EmploymentCard />} />
