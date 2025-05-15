@@ -1,6 +1,6 @@
 import React from 'react';
-import LawcardsF from '../components/CardF';
-import LegalNews from '../components/news';
+import LawcardsF from './components/CardF';
+import LegalNews from './components/news';
 import './Home.css';
 import { Link } from 'react-router-dom';
 
