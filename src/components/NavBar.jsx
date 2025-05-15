@@ -1,67 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 
 const NavBar = () => {
-    const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    
+    const toggleNavbar = () => {
+        setIsOpen(!isOpen);
+    };
 
     const handleBackClick = () => {
         const userConfirmed = window.confirm("Do you want to go back to login page?");
         if (userConfirmed) {
-            window.location.href = "https://charakan.info/";
+            window.location.href = "https://www.charakan.info/";
         }
     };
 
-    const handleNavToggle = () => {
-        setIsNavCollapsed(!isNavCollapsed);
-    };
-
-    const handleDropdownToggle = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <div className='top'>
             <nav className="navbar navbar-expand-lg navbar-dark bg-black">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="#" onClick={handleBackClick}>
-                        LAWRA
-                    </Link>
-
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        aria-controls="navbarNavDropdown"
-                        aria-expanded={!isNavCollapsed}
+                    <Link className="navbar-brand" to="#" onClick={handleBackClick}>LAWRA</Link>
+                    <button 
+                        className="navbar-toggler" 
+                        type="button" 
+                        onClick={toggleNavbar}
+                        aria-controls="navbarNavDropdown" 
+                        aria-expanded={isOpen ? "true": "false"} 
                         aria-label="Toggle navigation"
-                        onClick={handleNavToggle}
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-
-                    <div
-                        className={`navbar-collapse ${isNavCollapsed ? 'collapse': 'show'}`}
-                        id="navbarNavDropdown"
-                    >
+                    <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNavDropdown">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="nav-link active" to="/home">Home</Link>
+                                <Link className="nav-link active" aria-current="page" to="/home">Home</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/AboutUs">About Us</Link>
                             </li>
-                            <li
-                                className={`nav-item dropdown ${isDropdownOpen ? 'show' : ''}`}
-                                onClick={handleDropdownToggle}
-                            >
-                                <span className="nav-link dropdown-toggle" role="button">
-                                    Students
-                                </span>
-                                <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-                                    <li><Link className="dropdown-item" to="/assist">Research assistant</Link></li>
-                                    <li><Link className="dropdown-item" to="/news">News</Link></li>
-                                </ul>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/assist">Research assistant</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/chatbot">Chatbot</Link>
@@ -72,6 +55,6 @@ const NavBar = () => {
             </nav>
         </div>
     );
-};
+}
 
 export default NavBar;
